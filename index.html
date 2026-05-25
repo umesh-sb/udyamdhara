@@ -3302,6 +3302,11 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
+// Helper: pause execution for ms milliseconds (used for animated pipeline stages)
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function showPage(page) {
   document.querySelector(`.nav-item[data-page="${page}"]`).click();
 }
