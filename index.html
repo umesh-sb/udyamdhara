@@ -1148,7 +1148,8 @@ input, select, textarea { font-size: 16px; }
 
   .sidebar.open { left: 0; }
 
-  .app.active ~ .mobile-menu-btn { display: flex; }
+  /* Show hamburger button on mobile when logged in */
+  body.logged-in .mobile-menu-btn { display: flex; }
 
   .main {
     padding: 64px 14px 24px;
@@ -1373,10 +1374,10 @@ input, select, textarea { font-size: 16px; }
       <span>Live v5.0 · Groq AI</span>
     </div>
 
-    <div class="nav-item active" data-page="dashboard">
+    <div class="nav-item" data-page="dashboard">
       <span class="nav-icon">📊</span> Dashboard
     </div>
-    <div class="nav-item" data-page="generate">
+    <div class="nav-item active" data-page="generate">
       <span class="nav-icon">⚡</span> Generate Profile
     </div>
     <div class="nav-item" data-page="profiles">
@@ -1404,7 +1405,7 @@ input, select, textarea { font-size: 16px; }
 
   <main class="main">
     <!-- DASHBOARD -->
-    <div class="page active" id="page-dashboard">
+    <div class="page" id="page-dashboard">
       <div class="page-header">
         <div>
           <div class="page-title">
@@ -1461,7 +1462,7 @@ input, select, textarea { font-size: 16px; }
     </div>
 
     <!-- GENERATE -->
-    <div class="page" id="page-generate">
+    <div class="page active" id="page-generate">
       <div class="page-header">
         <div>
           <div class="page-title">Generate Live Profile</div>
@@ -1848,6 +1849,7 @@ function login() {
 
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').classList.add('active');
+  document.body.classList.add('logged-in');
 
   addAudit(`Login: ${currentUser.email}`, 'AUTH');
   showToast(`Welcome, ${currentUser.name}!`);
@@ -1860,6 +1862,8 @@ function logout() {
   addAudit(`Logout: ${currentUser.email}`, 'AUTH');
   currentUser = null;
   document.getElementById('app').classList.remove('active');
+  document.body.classList.remove('logged-in');
+  closeMobileSidebar();
   document.getElementById('loginScreen').style.display = 'flex';
 }
 
